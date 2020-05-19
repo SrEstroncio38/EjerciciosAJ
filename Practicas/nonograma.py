@@ -13,6 +13,7 @@ def nonoBacktrack(sol, filaActual, rows, cols, fCon, cCon, activeCols):
             isValid, newCCon, newAcCols = esFactible(filaActual, colActual, fCon, cCon, activeCols)
             if isValid:
                 sol[filaActual] = colActual + 1
+                # printSol(sol, rows, cols, fCon, cCon)
                 [sol, esSol] = nonoBacktrack(sol, filaActual+1, rows, cols, fCon, newCCon, newAcCols)
                 # Reseteo solución y las condiciones en las columnas
                 if not esSol:
@@ -53,8 +54,6 @@ def esFactible(filaActual, colActual, fCon, cCon, activeCols):
                     return False, cCon, activeCols
             if (cCon[colActual] > 0 and activeCols[colActual]):
                 return False, cCon, activeCols
-            else:
-                return True, cCon, activeCols
         i += 1
 
     # Si pasa las restricciones anteriores se intenta insertar la fila comprobando que coincida con las condiciones de
