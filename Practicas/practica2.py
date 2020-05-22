@@ -1,13 +1,14 @@
 import pygame
 import sys
 import lcm
+import lasvegas
 
 
 SCREEN_W = 20
 SCREEN_H = 20
 SIZE = 40
-MAX_T_SIZE = 12
-MAX_T_NUM = 40
+MAX_T_SIZE = 8
+MAX_T_NUM = 72
 D = 0.02
 D2 = 0.01
 DT = 0.2
@@ -27,33 +28,32 @@ def initMap(W, H):
 def printMap(map, xPj, yPj):
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_W * SIZE, SCREEN_H * SIZE))
-    screen.fill((0, 0, 255))
-    pygame.display.set_caption("Minesweeper")
+    pygame.display.set_caption("Practica2")
 
     resources = dict()
-    resources['tree'] = pygame.image.load("resources/minesweeper/tree.png").convert()
+    resources['tree'] = pygame.image.load("resources/p2/tree.png").convert()
     resources['tree'] = pygame.transform.scale(resources['tree'], (SIZE, SIZE))
-    resources['tree2'] = pygame.image.load("resources/minesweeper/tree2.png").convert()
+    resources['tree2'] = pygame.image.load("resources/p2/tree2.png").convert()
     resources['tree2'] = pygame.transform.scale(resources['tree2'], (SIZE, SIZE))
-    resources['grass'] = pygame.image.load("resources/minesweeper/grass.png").convert()
+    resources['grass'] = pygame.image.load("resources/p2/grass.png").convert()
     resources['grass'] = pygame.transform.scale(resources['grass'], (SIZE, SIZE))
-    resources['grass2'] = pygame.image.load("resources/minesweeper/grass2.png").convert()
+    resources['grass2'] = pygame.image.load("resources/p2/grass2.png").convert()
     resources['grass2'] = pygame.transform.scale(resources['grass2'], (SIZE, SIZE))
-    resources['pj'] = pygame.image.load("resources/minesweeper/pj.png").convert()
+    resources['pj'] = pygame.image.load("resources/p2/pj.png").convert()
     resources['pj'] = pygame.transform.scale(resources['pj'], (SIZE, SIZE))
-    resources['e1'] = pygame.image.load("resources/minesweeper/suicune.png").convert()
+    resources['e1'] = pygame.image.load("resources/p2/suicune.png").convert()
     resources['e1'] = pygame.transform.scale(resources['e1'], (SIZE, SIZE))
-    resources['e2'] = pygame.image.load("resources/minesweeper/entei.png").convert()
+    resources['e2'] = pygame.image.load("resources/p2/entei.png").convert()
     resources['e2'] = pygame.transform.scale(resources['e2'], (SIZE, SIZE))
-    resources['e3'] = pygame.image.load("resources/minesweeper/raikou.png").convert()
+    resources['e3'] = pygame.image.load("resources/p2/raikou.png").convert()
     resources['e3'] = pygame.transform.scale(resources['e3'], (SIZE, SIZE))
-    resources['poke'] = pygame.image.load("resources/minesweeper/poke.png").convert()
+    resources['poke'] = pygame.image.load("resources/p2/poke.png").convert()
     resources['poke'] = pygame.transform.scale(resources['poke'], (SIZE, SIZE))
     for i in range(len(map)):
         for j in range(len(map[0])):
             if(map[i][j] == 1):
                 if lcm.randomLCM(lcm.c) / lcm.c['M'] < D:
-                    r = int(lcm.randomLCM(lcm.c) / lcm.c['M'] * 2)
+                    r = int(lasvegas.randomLasVegas(0,3))
                     if(r == 0):
                         screen.blit(resources['e1'], (i * SIZE, j * SIZE))
                     elif(r == 1):

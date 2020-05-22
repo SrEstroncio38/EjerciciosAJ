@@ -1,5 +1,6 @@
 import datetime
 
+# seed = datetime.datetime.now().timestamp()
 seed = 1234
 c = {
     'M': 2**10-3,
@@ -18,6 +19,7 @@ def moduloSum(x, y, m):
 
 
 def randomLCM(c):
+    # print(seed)
     r = (c['A'] * c['X']) % c['M']
     r = moduloSum(r, c['C'], c['M'])
     c['X'] = r
