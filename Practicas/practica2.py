@@ -3,18 +3,30 @@ import sys
 import lcm
 import lasvegas
 
+    # #################### #
+    # Parámetros del juego #
+    # #################### #
 
 SCREEN_W = 20
 SCREEN_H = 20
+# Tamaño del pixel
 SIZE = 40
+# Tamaño max del túnel
 MAX_T_SIZE = 8
+# Tamaño número de túneles
 MAX_T_NUM = 72
+# Densidad de enemigos
 D = 0.02
+# Densidad de recompensas
 D2 = 0.01
+# Densidad de árboles
 DT = 0.2
+# Densidad de suelos
 DG = 0.2
 
-
+    # ############################################### #
+    # Inicializacion del Mapa en array biddimesional  #
+    # ############################################### #
 
 def initMap(W, H):
     fila = [0] * W
@@ -23,12 +35,18 @@ def initMap(W, H):
         map.append(fila[:])
     return map
 
-
+    # ###################################### #
+    # Print del Mapa en array biddimesional  #
+    # ###################################### #
 
 def printMap(map, xPj, yPj):
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_W * SIZE, SCREEN_H * SIZE))
     pygame.display.set_caption("Practica2")
+
+    # ################ #
+    # Carga de Assets  #
+    # ################ #
 
     resources = dict()
     resources['tree'] = pygame.image.load("resources/p2/tree.png").convert()
@@ -49,6 +67,12 @@ def printMap(map, xPj, yPj):
     resources['e3'] = pygame.transform.scale(resources['e3'], (SIZE, SIZE))
     resources['poke'] = pygame.image.load("resources/p2/poke.png").convert()
     resources['poke'] = pygame.transform.scale(resources['poke'], (SIZE, SIZE))
+
+    # Recorremos el mapa y elegimos si pintar suelo o pared
+    # Si es suele elegimos aleatoriamente si enemigo, recompensa o los tipos de suelo
+    # Si es pared elegimos aleatoriamente que tipo de pared
+    # Finalmente colocamos el personaje
+
     for i in range(len(map)):
         for j in range(len(map[0])):
             if(map[i][j] == 1):
@@ -86,6 +110,12 @@ def randomWalk(W, H, T, L, map):
     #print(x)
     #print(y)
 
+    # En cada iteración guardo el movimiento anterior, para no poder repetirlo.
+    # También guardo si me he chocado con una pared para no ir ni a la dirección anterior
+    # ni a la que me sacaría del mapa.
+    # Si al crear un túnel me salgo del mapa, genero el túnel la distancia que me quepa dentro del mismo
+    # y continúo generando otro túnel que no vaya hacia atrás ni se salga del mapa.
+
     last = [-1, -1]
     for i in range(T):
         check = True
@@ -103,8 +133,10 @@ def randomWalk(W, H, T, L, map):
         elif last[0] == 3:
             while (g == 2 or g == last[1]):
                 g = int(lcm.randomLCM(lcm.c) / lcm.c['M'] * 4)
+
         #print("giro ",g)
         #print("tamaño ", l)
+
         # Derecha
         if (g == 0):
             if (x + l < W):
