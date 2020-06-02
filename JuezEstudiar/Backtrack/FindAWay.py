@@ -4,60 +4,26 @@ def findAWayBC(f,c, tablero, N, visit, permitidas):
         esSol = True
     else:
         esSol = False
-        while not esSol:
-            [facDer, facIzq, facTop, facBot] = esFactible(f, c, tablero, N)
-            if facDer and c+1 < N:
-                tablero[f][c] = 1
+        mov = [[0, 1],[0, -1],[1, 0],[-1, 0]]
+        i = 0
+        while not esSol and i < len(mov):
+            if esFactible(f + mov[i][0], c + mov[i][1], tablero, N):
+                tablero[f + mov[i][0]][c + mov[i][1]] = 1
                 visit += 1
-                esSol = findAWayBC(f, c + 1, tablero, N, visit, permitidas)
+                esSol = findAWayBC(f + mov[i][0],c + mov[i][1], tablero, N, visit, permitidas)
                 if not esSol:
-                    visit -= 1
-                    tablero[f][c] = 0
-            elif facIzq and c - 1 >= 0:
-                tablero[f][c] = 1
-                visit += 1
-                esSol = findAWayBC(f, c - 1 , tablero, N, visit, permitidas)
-                if not esSol:
-                    visit -= 1
-                    tablero[f][c] = 0
-            elif facTop and f - 1 >= 0:
-                tablero[f][c] = 1
-                visit += 1
-                esSol = findAWayBC(f - 1, c, tablero, N, visit, permitidas)
-                if not esSol:
-                    visit -= 1
-                    tablero[f][c] = 0
-            elif facBot and f + 1 < N:
-                tablero[f][c] = 1
-                visit += 1
-                esSol = findAWayBC(f + 1, c, tablero, N, visit, permitidas)
-                if not esSol:
-                    visit -= 1
-                    tablero[f][c] = 0
-            elif f >= N-1 and c >= N-1 and permitidas - 1 == visit:
-                esSol = True
-                break
-            elif permitidas - 1 == visit and not(f >= N-1 and c >= N-1):
-                esSol = False
-                break
+                    tablero[f + mov[i][0]][c + mov[i][1]] = 0
+                    visit -=1
+            i += 1
     return esSol
 
 
 
 def esFactible(f, c, tablero, N):
-    facDer = False
-    facIzq = False
-    facTop = False
-    facBot = False
-    if c+1 < N:
-        facDer = tablero[f][c+1] == 0
-    if c-1 >= 0:
-        facIzq = tablero[f][c-1] == 0
-    if f-1 >= 0:
-        facTop = tablero[f-1][c] == 0
-    if f + 1 < N:
-        facBot = tablero[f+1][c] == 0
-    return [facDer, facIzq, facTop, facBot]
+    if f >= 0 and f < N and c >= 0 and c < N and tablero[f][c] == 0:
+        return True
+    else:
+        return False
 
 # N
 N = int(input())
