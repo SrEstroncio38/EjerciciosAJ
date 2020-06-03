@@ -114,7 +114,7 @@ def backtrackingBestSol (tablero, paso, mejorSol):
 
 ### DyV ###
 
-def divideYVenceras(array, limit, inicio, fin):
+'''def divideYVenceras(array, limit, inicio, fin):
     if inicio != fin:
         mid = (fin + 1 - inicio) // 2
         if int(array[inicio + mid]) <= limit:
@@ -125,7 +125,21 @@ def divideYVenceras(array, limit, inicio, fin):
         if int(array[inicio]) > limit:
             inicio = inicio - 1
         return inicio
-        # return array[inicio]
+        # return array[inicio]'''
+def BusquedaBin(list, level, ini, fin):
+    if level <= 0:
+        return 0
+    if ini > fin:
+        return ini
+    else:
+        mitad = int((ini+fin)/2)
+        comp = int(list[mitad])
+        if comp > level:
+            return BusquedaBin(list, level, ini, mitad-1)
+        if comp < level:
+            return BusquedaBin(list, level, mitad+1, fin)
+        if comp == level:
+            return mitad+1
 
 ### Voraces ###
 
@@ -247,7 +261,7 @@ def prim(nodoInicio, aristas, nNodos):
             break
     return coste
 
-def kruskal(aristas, nNodos):
+def kruskal(aristas, nNodos)
     # Ordeno por peso
     aristas.sort()
     conexas = []
